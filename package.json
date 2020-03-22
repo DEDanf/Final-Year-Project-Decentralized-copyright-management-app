@@ -1,0 +1,24 @@
+{
+  "name": "final-year-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DEDanf/Final-Year-Project.git"
+  },
+  "author": "Daniel Weng Yang Fong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DEDanf/Final-Year-Project/issues"
+  },
+  "homepage": "https://github.com/DEDanf/Final-Year-Project#readme",
+  "dependencies": {
+    "@hashgraph/sdk": "^1.1.8",
+    "dotenv": "^8.2.0",
+    "solc": "^0.6.4"
+  }
+}

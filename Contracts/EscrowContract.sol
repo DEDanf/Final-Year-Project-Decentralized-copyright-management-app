@@ -2,42 +2,46 @@ pragma solidity >=0.4.22 <0.7.0;
 
 contract EscrowContract {
 
-    address sender;
-    address receiver;
+    address payable sender;
+    address payable receiver;
     uint amountDeposited;
+    string connectionURL;
 
-    constructor(address _sender, address _receiver) public {
+    constructor(address _sender, address _receiver, string memory _url) public {
 
         sender = _sender;
         receiver = _receiver;
         amountDeposited = 0;
+        connectionURL = _url;
 
     }
 
     event depositMade(uint amount, uint timeStamp);
 
-    function deposit() public payable {
+    function deposit() public payable returns(string memory) {
 
         require(msg.sender == sender,"NOT_INTENDED_SENDER");
         amountDeposited += msg.value;
         emit depositMade(amountDeposited,now);
+        return connectionURL;
 
     }
 
-    function withdraw(bytes32 h, bytes32 r, bytes32 s, uint v, uint value) public{
+    function withdraw(bytes32 r, bytes32 s, uint8 v, uint value) public{
 
-        require(msg.sender == receiver);
+        require(msg.sender == receiver,"NOT_RECEIVER");
 
-        //this will contain the logic to check whether the channel is digitally signed,
-        //h is the hash, rsv are the signed of the hash and value is the amount to retrive.
-        //Now we take value and we hash it with keccak256 along with the contract address
-        //Next we plug that into ecrecover with the rsv and if the addr correspons with sender
-        //then we withdraw that value to receiver
+        address signerAddress;
+		bytes32 hashedVal;
 
+        hashedVal = keccak256(abi.encodePacked(this,value));
+		signerAddress = ecrecover(hashedVal, v, r, s);
+		require(signerAddress == sender,"INVALID_SIGNATURE");
 
+        receiver.transfer(value);
+        selfdestruct(sender);
 
-
-
-    }
-
+	}
 }
+
+

@@ -1,5 +1,4 @@
 pragma solidity >=0.4.22 <0.7.0;
-
 import "./RegisteredCopyright.sol";
 
 contract RegistrationHandler {
@@ -9,16 +8,6 @@ contract RegistrationHandler {
     uint amount;
     registeredCopyright[] copyrightDB;
 
-//Additional Descriptor for Search Query to work better
-    enum workType {
-
-        Text,
-        Audio,
-        Image,
-        Video,
-        Software
-
-    }
 //Constructor takes in registration cost and makes the sender the owner
     constructor(uint _registration_cost) public {
 
@@ -32,19 +21,18 @@ contract RegistrationHandler {
 
         string fileHash;
         address contractOwner;
-        workType creationType;
         RegisteredCopyright copyrightContract;
 
     }
 //Function to register a copyright
-    function registerCopyright(string memory _file_hash, workType _creation_type) public payable returns(RegisteredCopyright){
+    function registerCopyright(string memory _file_hash) public payable returns(RegisteredCopyright){
 
         require(msg.value == registrationCost, "WRONG_PAYMENT");
 
         amount += msg.value;
 
         RegisteredCopyright createdContract = new RegisteredCopyright(_file_hash, msg.sender);
-        copyrightDB.push(registeredCopyright(_file_hash, msg.sender, _creation_type, createdContract));
+        copyrightDB.push(registeredCopyright(_file_hash, msg.sender, createdContract));
         return createdContract;
 
     }
@@ -73,6 +61,11 @@ contract RegistrationHandler {
     function withdraw() public{
         require(msg.sender == manager, "NOT_OWNER");
         manager.transfer(amount);
+    }
+//Function to return cost of registration
+    function returnCost() public view returns(uint) {
+        return registrationCost;
+
     }
 
 }

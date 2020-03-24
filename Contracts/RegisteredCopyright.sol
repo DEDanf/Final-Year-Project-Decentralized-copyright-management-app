@@ -47,39 +47,49 @@ contract RegisteredCopyright {
 //Function to create a distribution license contract only available to an owner
     function createDistributionLicense() public returns(CommercialDistributionLicense) {
 
-        require(isOwner(msg.sender),"NOT_OWNER");
+        bool found;
+        uint index;
+        (found,index) = isOwner(msg.sender);
+        require(found,"NOT_OWNER");
 
         CommercialDistributionLicense createdContract = new CommercialDistributionLicense(fileHash,msg.sender);
         licenseContracts.push(createdContract);
         return createdContract;
 
     }
-//Function checks whether an account is an owner
-    function isOwner(address payable _sender) public view returns(bool) {
+//Function checks whether an account is an owner and returns owner index
+    function isOwner(address payable _sender) public view returns(bool,uint) {
 
         bool found = false;
         uint i = 0;
         while(!found) {
-            if(owners[i].account==_sender){
+            if(owners[i].account == _sender){
                 found = true;
             }
             i++;
         }
-        return found;
+        i--;
+        return (found,i);
 
     }
-
+//Function withdraws the corresponsing owners amount being held
     function withdraw() public {
-        require(isOwner(msg.sender),"NOT_OWNER");
 
-        bool done = false;
-        uint i = 0;
-        while(!done) {
-            if(owners[i].account == msg.sender){
-                msg.sender.transfer(owners[i].amount);
-            }
-        }
+        bool found;
+        uint index;
+        (found,index) = isOwner(msg.sender);
+        require(found,"NOT_OWNER");
+        require(owners[index].amount>0,"NO_FUNDS");
+        msg.sender.transfer(owners[index].amount);
+        owners[index].amount = 0;
 
+    }
+//Function returns the cost of a license
+    function returnCost() public view returns(uint) {
+        return licenseCost;
+    }
+//Function to purchase equity to an owner, this will make use of the Escrow contract.
+    function purchaseEquity() public payable returns(EscrowContract) {
 
     }
 

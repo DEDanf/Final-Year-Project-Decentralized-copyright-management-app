@@ -11,7 +11,7 @@ contract CommercialDistributionLicense {
     bool available;
     uint connectionCost;
     uint cost;
-    string costInfo;
+    uint costTimeIntervalInSeconds;
 //Events
     event purchaseMade(address buyer, EscrowContract contractCreated);
     event urlsDepleted(uint timeStamp);
@@ -42,43 +42,26 @@ contract CommercialDistributionLicense {
 
     }
 //Function to set distribution availability
-    function setAvailability(uint v) public {
+    function setAvailability(bool v) public {
         require(msg.sender == owner,"NOT_OWNER");
-        if(v == 1) {
-            require(connectionURLs.length > 0, "NO_URLS_AVAILABLE");
-            available = true;
-        }
-        if(v == 0) {
-            available = false;
-        }
+        available = v;
     }
 //Function to set costs
-    function setCosts(uint _connection_cost, uint _cost, string memory _cost_info) public {
+    function setCosts(uint _connection_cost, uint _cost, uint _cost_time_interval_in_seconds) public {
         require(msg.sender == owner, "NOT_OWNER");
 
         connectionCost = _connection_cost;
         cost = _cost;
-        costInfo = _cost_info;
+        costTimeIntervalInSeconds = _cost_time_interval_in_seconds;
     }
 //Function to add a URL
-    function addURL(string memory _url, uint v) public {
+    function addURL(string memory _url, bool v) public returns(uint256) {
 
         require(msg.sender == owner,"NOT_OWNER");
         connectionURLs.push(_url);
-        if(v == 1) {
-            available = true;
-        }
+        available = v;
+        return connectionURLs.length;
 
-    }
-//Function to add multiple URLs
-    function addURLs(string[] memory _url_list, uint v) public {
-        require(msg.sender == owner,"NOT_OWNER");
-        for(uint i = 0; i < _url_list.length; i++) {
-            connectionURLs.push(_url_list[i]);
-        }
-        if(v == 1) {
-            available = true;
-        }
     }
 //Function to withdraw funds
     function withdraw() public {
@@ -87,8 +70,8 @@ contract CommercialDistributionLicense {
         owner.transfer(amount);
     }
 //Function to return cost info
-    function returnCostInfo() public view returns(uint, uint, string memory) {
+    function returnCostInfo() public view returns(uint, uint, uint) {
 
-        return (connectionCost, cost, costInfo);
+        return (connectionCost, cost, costTimeIntervalInSeconds);
     }
 }

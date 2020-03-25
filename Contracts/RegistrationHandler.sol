@@ -29,6 +29,15 @@ contract RegistrationHandler {
 
         require(msg.value == registrationCost, "WRONG_PAYMENT");
 
+        bool found;
+        uint i = 0;
+        while(!found){
+            if(compareStrings(copyrightDB[i].fileHash,_file_hash)){
+                found = true;
+            }
+        }
+        require(!found,"FILE_HASH_DUPLICATE");
+
         amount += msg.value;
 
         RegisteredCopyright createdContract = new RegisteredCopyright(_file_hash, msg.sender);

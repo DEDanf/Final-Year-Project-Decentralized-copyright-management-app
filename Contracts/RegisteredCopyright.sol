@@ -58,7 +58,7 @@ contract RegisteredCopyright {
 
     }
 //Function checks whether an account is an owner and returns owner index
-    function isOwner(address payable _sender) public view returns(bool,uint) {
+    function isOwner(address payable _sender) internal view returns(bool,uint) {
 
         bool found = false;
         uint i = 0;
@@ -90,6 +90,14 @@ contract RegisteredCopyright {
     }
 //Function to purchase equity to an owner, this will make use of the Escrow contract.
     function purchaseEquity() public payable returns(EscrowContract) {
+    }
+//Function to return licenseContracts to owner
+    function retrieveLicenses() public view returns(CommercialDistributionLicense[] memory) {
+        bool found;
+        uint index;
+        (found,index) = isOwner(msg.sender);
+        require(found,"NOT_OWNER");
+        return licenseContracts;
 
     }
 

@@ -7,7 +7,7 @@ contract EscrowContract {
     uint amountDeposited;
     string connectionURL;
 //Constructor taking in the sender and receiver of the payment channel along with the connection URL
-    constructor(address _sender, address _receiver, string memory _url) public {
+    constructor(address payable _sender, address payable _receiver, string memory _url) public {
 
         sender = _sender;
         receiver = _receiver;

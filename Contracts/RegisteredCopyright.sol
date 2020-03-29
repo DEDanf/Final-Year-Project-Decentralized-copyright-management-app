@@ -100,5 +100,23 @@ contract RegisteredCopyright {
         return licenseContracts;
 
     }
+//Function to set license costs
+    function setCost(uint cost) public {
+        bool found;
+        uint index;
+        (found,index) = isOwner(msg.sender);
+        require(found,"NOT_OWNER");
+        licenseCost = cost;
+
+    }
+//Function to set license availability
+    function setLicenseAvailability(bool a) public{
+        bool found;
+        uint index;
+        (found,index) = isOwner(msg.sender);
+        require(found, "NOT_OWNER");
+        sellingLicenses = a;
+
+    }
 
 }

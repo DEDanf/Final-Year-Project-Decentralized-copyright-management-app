@@ -17,6 +17,8 @@ List of all functions:
 -DepositEscrow
 -RegisterCopyright
 -CreateClient
+-SetLicenseAvailability
+-SetLicenseCost
 
 */
 
@@ -34,7 +36,7 @@ module.exports = {
             .setFunction('returnCost', null)
             .execute(client);
 
-        return callResult.getString(0);
+        return callResult.getUint8(0);
     },
 //Function to retrieve the associated cost and cost information for a given I.P., returns connection cost, cost value and cost info 
 //indicating the cost for a given timespan, returns connectionCost, cost, costIntervals (in seconds)
@@ -46,7 +48,7 @@ module.exports = {
             .setFunction('returnCostInfo', null)
             .execute(client);
     
-        return (callResult.getString(0),callResult.getString(1),callResult.getString(2));
+        return (callResult.getUint8(0),callResult.getUint8(1),callResult.getUint8(2));
     },
 //Function to search the registrationHandler contract for a file hash which returns the associated copyright contract
 //To be used with RegistrationHandler.sol
@@ -70,7 +72,7 @@ module.exports = {
             .setFunction('retrieveLicenses', null)
             .execute(client)
 
-        return callResult.getString(0);
+        return callResult;
     },
 //Function for license owner to set the availability of the IP
 //To be used with CommercialDistributionLicense.sol    
@@ -112,7 +114,7 @@ module.exports = {
             .setFunction('addURL', params)
             .execute(client);
 
-        return callResult.getString(0);
+        return callResult.getUint256(0);
 
     },
 //Function to withdraw funds from a contract
@@ -141,7 +143,7 @@ module.exports = {
         const balance = await new hedera.AccountBalanceQuery()       
             .setAccountId(account)        
             .execute(client);
-        console.log(balance);
+  
         return `${balance.asTinybar()}`
     },
 //This function executes the purchase of a commercial distribution license and returns the created contracts address
@@ -173,10 +175,11 @@ module.exports = {
     },
 //Function to deposit funds into escrow returning the connection url
 //To be used with EscrowContract.sol
-    DepositEscrow: async function(contractId, client, deposit) {
+    DepositEscrow: async function(contractID, client, deposit) {
           
     const getRecord = await (await new hedera.ContractExecuteTransaction()
         .setContractId(contractID)
+        .setMaxTransactionFee(new hedera.Hbar(20))
         .setGas(7000) // ~6016
         .setPayableAmount(deposit)
         .setFunction('deposit')
@@ -215,8 +218,45 @@ module.exports = {
                 privateKey: operatorPrivateKey
             }
         });
-        console.log(client);
+
         return client;
+    },
+//This function takes a bool and sets a copyright contract to make license sales available or not
+    SetLicenseAvailability: async function(client, v, contractID) {
+
+        var params = new hedera.ContractFunctionParams()
+            .addBool(v);
+
+        const callResult = await new hedera.ContractCallQuery()
+            .setContractId(contractID)
+            .setGas(2000)
+            .setFunction('setLicenseAvailability', params)
+            .execute(client);
+
+    },
+//This function sets the cost for a registeredCopyright license
+    SetLicenseCost: async function(client, contractID, cost) {
+
+        var params = new hedera.ContractFunctionParams()
+            .addUint8(cost);
+
+        const callResult = new hedera.ContractCallQuery()
+            .setContractId(contractID)
+            .setGas(2000)
+            .setFunction('setCost', params)
+            .execute(client);
+    },
+//This function checks whether the deposit has been made
+    CheckDeposit: async function(client, contractID) {
+
+        const callResult = await new hedera.ContractCallQuery()
+        .setContractId(contractID)
+        .setGas(2000)
+        .setFunction('checkDeposit', null)
+        .execute(client);
+
+        return callResult.getUint8(0);
     }
+
 }
 

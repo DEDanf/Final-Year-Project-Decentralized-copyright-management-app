@@ -8,6 +8,7 @@ async function main() {
     const smartContractByteCode = smartContract.contracts[ "RegistrationHandler.sol: RegistrationHandler" ].bin;
 
     console.log("contract bytecode size:", smartContractByteCode.length, "bytes");
+    
 
     // First we must upload a file containing the byte code
     const byteCodeFileId = (await (await new FileCreateTransaction()
@@ -39,3 +40,4 @@ async function main() {
     console.log("contract create gas used:", record.getContractCreateResult().gasUsed);
     console.log("contract create transaction fee:", record.transactionFee.asTinybar());
     console.log("contract:", newContractId.toString());
+}

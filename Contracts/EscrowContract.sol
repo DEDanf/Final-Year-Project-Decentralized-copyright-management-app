@@ -22,9 +22,13 @@ contract EscrowContract {
 
         require(msg.sender == sender,"NOT_INTENDED_SENDER");
         amountDeposited += msg.value;
-        emit depositMade(amountDeposited,now);
         return connectionURL;
 
+    }
+
+    function checkDeposit() public view returns(string memory, uint) {
+        require(msg.sender == receiver, "NOT_INTENDED_RECEIVER");
+        return (connectionURL, amountDeposited);
     }
 //Function for the receiver to withdraw his due funds
     function withdraw(bytes32 r, bytes32 s, uint8 v, uint value) public{

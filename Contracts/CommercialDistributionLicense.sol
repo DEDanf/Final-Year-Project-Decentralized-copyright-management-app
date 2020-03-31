@@ -13,8 +13,8 @@ contract CommercialDistributionLicense {
     uint cost;
     uint costTimeIntervalInSeconds;
 //Events
-    event purchaseMade(address buyer, EscrowContract contractCreated);
-    event urlsDepleted(uint timeStamp);
+    event purchaseMade(address buyer, EscrowContract contractCreated, uint urlCount);
+
 //Constructor taking in file hash and the owner
     constructor(string memory _file_hash, address payable _owner) public {
 
@@ -32,12 +32,11 @@ contract CommercialDistributionLicense {
         string memory url = connectionURLs[connectionURLs.length-1];
         delete connectionURLs[connectionURLs.length-1];
         if(connectionURLs.length == 0) {
-            emit urlsDepleted(now);
             available = false;
         }
 
         EscrowContract contractCreated = new EscrowContract(msg.sender, owner, url);
-        emit purchaseMade(msg.sender, contractCreated);
+        emit purchaseMade(msg.sender, contractCreated, connectionURLs.length);
         return contractCreated;
 
     }

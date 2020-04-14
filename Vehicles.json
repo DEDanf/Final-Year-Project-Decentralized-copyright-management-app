@@ -1,0 +1,258 @@
+{
+    "Vehicles": [
+        {
+            "Name": "Mercedez CLA Coupe",
+            "Engine": [
+                {
+                    "ID": "CLA180",
+                    "Details": [
+                        {
+                            "HorsePower": 121,
+                            "Torque": 200,
+                            "RPM": 1250,
+                            "Cost": 50
+                        },
+                        {
+                            "HorsePower": 120,
+                            "Torque": 200,
+                            "RPM": 1250,
+                            "Cost": 40
+                        }
+                    ]
+                },
+                {
+                    "ID": "CLA200",
+                    "Details": [
+                        {
+                            "HorsePower": 154,
+                            "Torque": 250,
+                            "RPM": 1250,
+                            "Cost": 60
+                        }
+                    ]
+
+                },
+                {
+                    "ID": "CLA250",
+                    "Details": [
+                        {
+                            "HorsePower": 208,
+                            "Torque": 350,
+                            "RPM": 1200,
+                            "Cost": 80
+                        },
+                        {
+                            "HorsePower": 215,
+                            "Torque": 350,
+                            "RPM": 1200,
+                            "Cost": 110
+                        },
+                        {
+                            "HorsePower": 208,
+                            "Torque": 350,
+                            "RPM": 1200,
+                            "Cost": 90 
+                        },
+                        {
+                            "HorsePower": 221,
+                            "Torque": 350,
+                            "RPM": 1200,
+                            "Cost": 90
+                        }
+
+                    ]
+                }
+            ]
+            ,
+            "Colors": ["White","Black","Grey"],
+            "AdditionalFeatures": [
+                {
+                    "EnableNavigation":40
+                },
+                {
+                    "CruiseControl":200
+
+                }
+            ]
+        },
+        {
+            "Name": "Mercedez A Class",
+            "Engine": [
+                {
+                    "ID": "M282",
+                    "Details": [
+                        {
+                            "HorsePower": 107,
+                            "Torque": 180,
+                            "RPM": 1375,
+                            "Cost": 80
+                        },
+                        {
+                            "HorsePower": 134,
+                            "Torque": 200,
+                            "RPM": 1460,
+                            "Cost": 90
+                        },
+                        {
+                            "HorsePower": 161,
+                            "Torque": 250,
+                            "RPM": 1620,
+                            "Cost": 100
+                        }
+                    ]
+                },
+                {
+                    "ID": "M260",
+                    "Details": [
+                        {
+                            "HorsePower": 221,
+                            "Torque": 350,
+                            "RPM": 1800,
+                            "Cost": 110
+                        },
+                        {
+                            "HorsePower": 181,
+                            "Torque": 280,
+                            "RPM": 3000,
+                            "Cost": 120
+                        },
+                        {
+                            "HorsePower": 194,
+                            "Torque": 320,
+                            "RPM": 1650,
+                            "Cost": 130
+                        },
+                        {
+                            "HorsePower": 255,
+                            "Torque": 370,
+                            "RPM": 1800,
+                            "Cost": 140
+                        },
+                        {
+                            "HorsePower": 295,
+                            "Torque": 400,
+                            "RPM": 3000,
+                            "Cost": 150
+                        }
+                    ]
+
+                },
+                {
+                    "ID": "M139",
+                    "Details": [
+                        {
+                            "HorsePower": 382,
+                            "Torque": 480,
+                            "RPM": 4750,
+                            "Cost": 180
+                        },
+                        {
+                            "HorsePower": 416,
+                            "Torque": 500,
+                            "RPM": 5000,
+                            "Cost": 200
+                        }
+                    ]
+                }
+            ]
+            ,
+            "Colors": ["Red","Blue","White","Black","Grey"],
+            "AdditionalFeatures": [
+                {
+                    "EnableSpotify": 100
+                
+                },
+                {
+                    "EnableNavigation":40
+                },
+                {
+                    "CruiseControl":200
+
+                },
+                {
+                    "HeatedSeating": 20
+                }
+            ]
+
+        },
+        {
+            "Name": "Mercedez Saloon",
+            "Engine": [
+                {
+                    "ID": "C180",
+                    "Details": [
+                        {
+                            "HorsePower": 154,
+                            "Torque": 250,
+                            "RPM": 1200,
+                            "Cost": 50
+                        }
+                    ]
+                },
+                {
+                    "ID": "C200",
+                    "Details": [
+                        {
+                            "HorsePower": 181,
+                            "Torque": 300,
+                            "RPM": 1300,
+                            "Cost": 70
+                        },
+                        {
+                            "HorsePower": 181,
+                            "Torque": 300,
+                            "RPM": 1350,
+                            "Cost": 75
+                        }
+                    ]
+
+                },
+                {
+                    "ID": "C250",
+                    "Details": [
+                        {
+                            "HorsePower": 208,
+                            "Torque": 350,
+                            "RPM": 1400,
+                            "Cost": 100
+                        }
+                    ]
+                },
+                {
+                    "ID": "C300",
+                    "Details": [
+                        {
+                            "HorsePower": 241,
+                            "Torque": 370,
+                            "RPM": 1600,
+                            "Cost": 180
+                        }
+                    ]
+                }
+            ]
+            ,
+            "Colors": ["Blue","White","Black"],
+            "AdditionalFeatures": [
+                {
+                    "EnableSpotify": 100
+                
+                },
+                {
+                    "EnableNavigation":40
+                },
+                {
+                    "CruiseControl":200
+
+                },
+                {
+                    "HeatedSeating": 20
+                },
+                {
+                    "Driverless": 250
+                }
+            ]
+
+        }
+
+    ]
+}

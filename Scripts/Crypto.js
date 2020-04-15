@@ -18,8 +18,8 @@ module.exports = {
 
     DecryptMessage: function(signedMsg, pubKey) {
 
-        var key = hedera.Ed25519PublicKey.fromString(pub)._keyData;
-        var decrypted = nacl.sign.open(signedMsg, pubKey);
+        var key = hedera.Ed25519PublicKey.fromString(pubKey)._keyData;
+        var decrypted = nacl.sign.open(signedMsg, key);
         return stableLib.decode(decrypted);
 
     }
